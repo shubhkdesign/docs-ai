@@ -18,7 +18,7 @@ export default function Home() {
         <h1 className="text-2xl font-bold">My Documents</h1>
         <CreateDocumentButton />
       </div>
-      <div className="grid pt-6 grid-cols-2 md:grid-cols-3 lg:grid-col-4 gap-2">
+      <div className="grid pt-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-2">
         {documents?.map((document) => (
           <DocumentCard key={document._id} document={document} />
         ))}
