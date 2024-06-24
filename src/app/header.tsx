@@ -4,10 +4,11 @@ import { SignInButton, UserButton } from "@clerk/nextjs";
 import { Unauthenticated, Authenticated } from "convex/react";
 import React from "react";
 import Image from "next/image";
+import HeaderActions from "./header-actions";
 
 const Header = () => {
   return (
-    <nav className="bg-slate-900 py-4">
+    <nav className="py-4 bg-neutral-700">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <Image
@@ -19,12 +20,8 @@ const Header = () => {
         </div>
         <div className="flex gap-4">
           <ModeToggle />
-          <Unauthenticated>
-            <SignInButton />
-          </Unauthenticated>
-          <Authenticated>
-            <UserButton />
-          </Authenticated>
+
+          <HeaderActions />
         </div>
       </div>
     </nav>
