@@ -23,6 +23,7 @@ import LoadingButton from "@/components/ui/loading-button";
 
 const formSchema = z.object({
   title: z.string().min(2).max(250),
+  file: z.instanceof(File),
 });
 
 const UploadDocumentForm = ({ onUpload }: { onUpload: () => void }) => {
@@ -32,9 +33,20 @@ const UploadDocumentForm = ({ onUpload }: { onUpload: () => void }) => {
       title: "",
     },
   });
+  const generateUploadUrl = useMutation(api.documents.generateUploadUrl);
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    await createDocument(values);
+    const url = await generateUploadUrl();
+
+    const result = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": values.file.type },
+      body: values.file,
+    });
+    const { storageId } = await result.json();
+    await createDocument({
+      title: values.title,
+      fileId: storageId as string,
+    });
     onUpload();
   }
   const createDocument = useMutation(api.documents.createDocument);
@@ -51,6 +63,28 @@ const UploadDocumentForm = ({ onUpload }: { onUpload: () => void }) => {
                 <Input
                   placeholder="Upload a document with doc,txt,pdf for best results"
                   {...field}
+                />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="file"
+          render={({ field: { value, onChange, ...fieldProps } }) => (
+            <FormItem>
+              <FormLabel>Upload File</FormLabel>
+              <FormControl>
+                <Input
+                  {...fieldProps}
+                  type="file"
+                  accept=".txt,.xml,.doc"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    onChange(file);
+                  }}
                 />
               </FormControl>
 

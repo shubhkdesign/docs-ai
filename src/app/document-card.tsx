@@ -14,10 +14,13 @@ export const DocumentCard = ({ document }: { document: Doc<"documents"> }) => {
     <Card>
       <CardHeader>
         <CardTitle>{document.title}</CardTitle>
-        <CardDescription>{document._creationTime}</CardDescription>
+        <CardDescription>{document.fileId}</CardDescription>
       </CardHeader>
       <CardContent>
-        <Button variant={"secondary"}>View</Button>
+        <h3>File name</h3>
+        <Button className="mt-2" variant={"secondary"}>
+          View
+        </Button>
       </CardContent>
     </Card>
   );

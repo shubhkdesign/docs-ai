@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import UploadDocumentForm from "./upload-document-form";
 
-const CreateDocumentButton = () => {
+const UploadDocumentButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
@@ -35,4 +35,4 @@ const CreateDocumentButton = () => {
   );
 };
 
-export default CreateDocumentButton;
+export default UploadDocumentButton;
